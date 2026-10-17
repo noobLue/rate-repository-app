@@ -9,6 +9,7 @@ const theme = {
     repositoryItemBackground: '#ffffff',
     borderColor: '#517059',
     white: '#ffffff',
+    error: '#d73a4a'
   },
   fontSizes: {
     body: 14,
