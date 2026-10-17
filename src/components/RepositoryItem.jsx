@@ -1,6 +1,6 @@
 import { Text, View } from "react-native"
 
-export const RepositoryItem = ({item}) => {
+const RepositoryItem = ({item}) => {
     return <View>
         <Text>Full name: {item.fullName}</Text>
         <Text>Description: {item.description}</Text>
@@ -11,3 +11,5 @@ export const RepositoryItem = ({item}) => {
         <Text>Rating: {item.ratingAverage}</Text>
     </View>
 }
+
+export default RepositoryItem
