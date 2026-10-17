@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         padding: 14,
         margin: 7,
         backgroundColor: theme.colors.white,
+        fontFamily: theme.fonts.main,
     },
     errorInput: {
         borderColor: theme.colors.error,
