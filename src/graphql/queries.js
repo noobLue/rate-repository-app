@@ -17,4 +17,13 @@ query RepoInfo {
       }
     }
   }
-}`
+}
+`
+
+export const ME = gql`
+query Me{
+    me {
+        id
+        username
+    }
+}`;
