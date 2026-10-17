@@ -4,9 +4,11 @@ import { NativeRouter } from 'react-router-native';
 import createApolloClient from './src/utils/apolloClient';
 import { ApolloProvider } from '@apollo/client/react';
 
+import AuthStorage from './src/utils/authStorage';
+import AuthStorageContext from './src/contexts/AuthStorageContext';
 
-
-const apolloClient = createApolloClient();
+const authStorage = new AuthStorage();
+const apolloClient = createApolloClient(authStorage);
 
 const App = () => {
   return (<>
@@ -16,7 +18,9 @@ const App = () => {
       v7_relativeSplatPath: true,
     }}>
       <ApolloProvider client={apolloClient}>
-        <Main />
+        <AuthStorageContext.Provider value={authStorage}>
+          <Main />
+        </AuthStorageContext.Provider>
       </ApolloProvider>
     </NativeRouter>
   </>);
