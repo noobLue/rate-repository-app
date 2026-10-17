@@ -7,6 +7,7 @@ const theme = {
     appBarText: '#ffffff',
     mainBackground: '#e1e4e8',
     repositoryItemBackground: '#ffffff',
+    borderColor: '#517059',
     white: '#ffffff',
   },
   fontSizes: {
