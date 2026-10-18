@@ -65,7 +65,7 @@ const RepositoryItemHeader = ({item}) => {
 }
 
 const RepositoryItem = ({item}) => {
-    return <View style={styles.container}>
+    return <View testID="repositoryItem" style={styles.container}>
         <RepositoryItemHeader item={item}/>
 
         <View style={styles.countsContainer}>
