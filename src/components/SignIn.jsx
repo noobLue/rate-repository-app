@@ -46,6 +46,28 @@ const validationSchema = yup.object().shape({
 });
 
 
+export const SignInContainer = ({onSubmit}) => {
+    const formik = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit
+    });
+
+    const isUsernameError = formik.touched.username && formik.errors.username;
+    const isPassowrdError = formik.touched.password && formik.errors.password;
+
+    return <View style={styles.container}>
+        <TextInput testID="username" style={[styles.input, isUsernameError && styles.errorInput]} placeholder='username' value={formik.values.username} onChangeText={formik.handleChange('username')} onBlur={formik.handleBlur('username')}/>
+        {isUsernameError && <Text color="error" style={styles.errorText}>{formik.errors.username}</Text>}
+        
+        <TextInput testID="password" style={[styles.input, isPassowrdError && styles.errorInput]} placeholder='password' value={formik.values.password} onChangeText={formik.handleChange('password')} onBlur={formik.handleBlur('password')} secureTextEntry/>
+        {isPassowrdError && <Text color="error" style={styles.errorText}>{formik.errors.password}</Text>}
+        
+        <Pressable testID="signinButton" style={styles.button} onPress={formik.handleSubmit}><Text color="white" fontWeight="bold">Sign in!</Text></Pressable>
+    </View>;
+
+};
+
 const SignIn = () => {
     const [signIn] = useSignIn();
     const navigate = useNavigate();
@@ -60,25 +82,8 @@ const SignIn = () => {
             console.log(error);
         }
     }
-
-    const formik = useFormik({
-        initialValues,
-        validationSchema,
-        onSubmit
-    });
-
-    const isUsernameError = formik.touched.username && formik.errors.username;
-    const isPassowrdError = formik.touched.password && formik.errors.password;
-
-    return <View style={styles.container}>
-        <TextInput style={[styles.input, isUsernameError && styles.errorInput]} placeholder='username' value={formik.values.username} onChangeText={formik.handleChange('username')} onBlur={formik.handleBlur('username')}/>
-        {isUsernameError && <Text color="error" style={styles.errorText}>{formik.errors.username}</Text>}
-        
-        <TextInput style={[styles.input, isPassowrdError && styles.errorInput]} placeholder='password' value={formik.values.password} onChangeText={formik.handleChange('password')} onBlur={formik.handleBlur('password')} secureTextEntry/>
-        {isPassowrdError && <Text color="error" style={styles.errorText}>{formik.errors.password}</Text>}
-        
-        <Pressable style={styles.button} onPress={formik.handleSubmit}><Text color="white" fontWeight="bold">Sign in!</Text></Pressable>
-    </View>;
+    
+    return (<SignInContainer onSubmit={onSubmit} />)
 };
 
 export default SignIn;
