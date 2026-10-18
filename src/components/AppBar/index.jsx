@@ -33,7 +33,9 @@ const AppBar = () => {
     <ScrollView horizontal style={styles.scrollView}>
         <AppBarTab style={styles.tab} to="/">Repositories</AppBarTab>
         {me && me.username && <AppBarTab to="/createreview">Create a review</AppBarTab> }
-        {(me && me.username) ? <PressableTab callback={signOut}>Sign out!</PressableTab> : <AppBarTab to="/signin">Sign in!</AppBarTab>}
+        {me && me.username && <PressableTab callback={signOut}>Sign out!</PressableTab>}
+        {!me && <AppBarTab to="/signin">Sign in!</AppBarTab>}
+        {!me && <AppBarTab to="/signup">Sign up!</AppBarTab>}
     </ScrollView>
   </View>;
 };
