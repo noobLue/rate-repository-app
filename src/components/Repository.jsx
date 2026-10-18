@@ -3,55 +3,19 @@ import RepositoryItem from "./RepositoryList/RepositoryItem";
 import { useQuery } from "@apollo/client/react";
 import { GET_REPOSITORY } from "../graphql/queries";
 import Text from "./Text";
-import theme from "../theme";
 import { View, FlatList, StyleSheet } from "react-native";
-import { format } from "date-fns";
+import ReviewItem from "./ReviewItem";
 
 const styles = StyleSheet.create({
     separator: {
         height: 14,
     },
-    container: {
-        flexDirection: 'row',
-        backgroundColor: theme.colors.white,
-    },
-    review: {
-        flexShrink: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 28,
-        width: 56,
-        height: 56,
-        borderWidth: 2,
-        borderColor: theme.colors.primary,
-        alignSelf: 'flex-start',
-        margin: 14,
-    },
-
-    textContainer: {
-        marginTop: 14,
-        marginRight: 14,
-        marginBottom: 14,
-        flex: 1,
-    }
 });
 
 const Separator = () => {
     return <View style={styles.separator} />;
 }
 
-const ReviewItem = ({review}) => {
-    return (<View style={styles.container}>
-        <View style={styles.review}>
-            <Text fontWeight="bold" color="primary">{review.rating}</Text>
-        </View>
-        <View style={styles.textContainer}>
-            <Text fontWeight="bold">{review.user.username}</Text>
-            <Text>{format(new Date(review.createdAt), 'dd MMM yyyy')}</Text>
-            <Text>{review.text}</Text>
-        </View>
-    </View>);
-};
 
 const Repository = () => {
     const {id} = useParams();
