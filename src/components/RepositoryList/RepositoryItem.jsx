@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, Linking, Pressable } from "react-native";
 import Text from '../Text';
 import theme from "../../theme";
 
@@ -32,12 +32,21 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         backgroundColor: theme.colors.primary,
         borderRadius: 4,
-        paddingVertical: 4,
+        paddingVertical: 8,
         paddingHorizontal: 8,
     },
     description: {
         marginVertical: 5,
-    }
+    },
+    githubButton: {
+        backgroundColor: theme.colors.primary,
+        alignSelf: 'stretch',
+        alignItems: 'center',
+        justifyItems: 'center',
+        margin: 7,
+        padding: 14,
+        borderRadius: 4,
+    },
 });
 
 const countAsString = (count) => {
@@ -64,7 +73,11 @@ const RepositoryItemHeader = ({item}) => {
     </View>
 }
 
-const RepositoryItem = ({item}) => {
+const GithubButton = ({url}) => {
+    return (<Pressable style={styles.githubButton} onPress={()=>Linking.openURL(url)}><Text color="white" fontWeight="bold">Open in GitHub</Text></Pressable>);
+}
+
+const RepositoryItem = ({item, showUrl = false}) => {
     return <View testID="repositoryItem" style={styles.container}>
         <RepositoryItemHeader item={item}/>
 
@@ -74,6 +87,8 @@ const RepositoryItem = ({item}) => {
             <LabelCount label="Reviews" count={item.reviewCount}></LabelCount>
             <LabelCount label="Rating" count={item.ratingAverage}></LabelCount>
         </View>
+
+        {(item.url && showUrl) && (<GithubButton url={item.url}/>)}
     </View>
 }
 

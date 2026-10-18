@@ -1,5 +1,6 @@
 import { render, screen, within } from "@testing-library/react-native";
 import { RepositoryListContainer } from "../../../components/RepositoryList";
+import { MemoryRouter } from "react-router-native";
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
@@ -48,7 +49,7 @@ describe('RepositoryList', () => {
       };
 
       // Add your test code here
-      await render(<RepositoryListContainer repositories={repositories}/>);
+      await render(<MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><RepositoryListContainer repositories={repositories}/></MemoryRouter>);
       
       const repositoryItems = screen.getAllByTestId('repositoryItem');
       expect(repositoryItems.length).toBe(2);
