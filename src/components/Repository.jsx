@@ -69,10 +69,9 @@ const Repository = () => {
     return (<FlatList 
         data={reviews} 
         renderItem={({item})=><ReviewItem review={item}/>}
-        keyExtractor={({id})=>id}
         ItemSeparatorComponent={<Separator/>}
         ListHeaderComponent={()=><><RepositoryItem item={data.repository} showUrl={true}/><Separator/></>}
-        />)
+    />)
 }
 
 export default Repository;
