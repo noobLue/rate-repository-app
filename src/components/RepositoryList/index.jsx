@@ -1,10 +1,11 @@
-import { FlatList, View, StyleSheet, Pressable } from 'react-native';
+import { FlatList, View, StyleSheet, Pressable, TextInput } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../../hooks/useRepositories';
 import { useNavigate } from 'react-router-native';
 import { useState } from 'react';
 import { Picker } from '@react-native-picker/picker';
 import theme from '../../theme';
+import { useDebounce } from 'use-debounce';
 
 const styles = StyleSheet.create({
   separator: {
@@ -14,6 +15,11 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
     marginTop: 7,
     marginBottom: 7,
+  },
+  filter: {
+    backgroundColor: theme.colors.white,
+    marginTop: 7,
+    padding: 7,
   }
 });
 
@@ -30,7 +36,11 @@ const Order = ({ order, setOrder}) => {
   </View>
 }
 
-export const RepositoryListContainer = ({repositories, order, setOrder}) => {
+const Filter = ({filter, setFilter}) => {
+  return (<TextInput style={styles.filter} value={filter} onChangeText={setFilter} placeholder="Search"/>);
+}
+
+export const RepositoryListContainer = ({repositories, order, setOrder, filter, setFilter}) => {
   const navigate = useNavigate();
 
   const repoNodes = (repositories && repositories.edges)
@@ -41,7 +51,7 @@ export const RepositoryListContainer = ({repositories, order, setOrder}) => {
     <FlatList
       data={repoNodes}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={<Order order={order} setOrder={setOrder} />}
+      ListHeaderComponent={(<View><Filter filter={filter} setFilter={setFilter}/><Order order={order} setOrder={setOrder} /></View>)}
       renderItem={({item})=><Pressable onPress={()=>navigate(`/repository/${item.id}`)}><RepositoryItem item={item}/></Pressable>}
     />
   );
@@ -56,9 +66,16 @@ const ORDER = {
 
 const RepositoryList = () => {
     const [order, setOrder] = useState('latest');
-    const {repositories} = useRepositories(ORDER[order]);
+    const [filter, setFilter] = useState('');
+    const [debounceFilter] = useDebounce(filter, 500);
 
-    return (<RepositoryListContainer order={order} setOrder={setOrder} repositories={repositories}/>)
+    const {repositories} = useRepositories({
+      orderBy: ORDER[order].orderBy, 
+      orderDirection: ORDER[order].orderDirection,
+      searchKeyword: debounceFilter,
+    });
+
+    return (<RepositoryListContainer order={order} setOrder={setOrder} filter={filter} setFilter={setFilter} repositories={repositories}/>)
 };
 
 export default RepositoryList;
